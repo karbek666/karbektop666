@@ -17,21 +17,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="profile">Профиль</a>
+          <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Добовление и просмотр
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Продажа</a></li>
-            <li><a class="dropdown-item" href=" book/">Покупка</a></li>
+            <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
+            <li><a class="dropdown-item" href=" {% url 'book' %}">Покупка</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="poderka/">поддержка</a>
+          <a class="nav-link" href="{% url 'poderka' %}">поддержка</a>
         </li>
       </ul>
       <form class="d-flex" role="search">

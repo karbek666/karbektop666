@@ -27,16 +27,15 @@
                         Добовление и просмотр
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="sell/">Продажа</a></li>
-                        <li><a class="dropdown-item" href="book/">Покупка</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
+                        <li><a class="dropdown-item" href="{% url 'book' %}">Покупка</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="poderka">поддержка</a>
+                    <a class="nav-link" href="{% url 'poderka' %}">поддержка</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

@@ -14,7 +14,7 @@ def index(request):
     return response
 @login_required
 def profile(request):
-
+    profile = Profile.objects.all()
     response = render(request, 'profile.html', {'profiles': profile})
     return response
 

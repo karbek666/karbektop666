@@ -3,48 +3,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg bg-green">
+    <div class="container-fluid">
+        <a class="navbar-brand" href=" "><img src="{% static '1643620409_72-papik-pro-p-nedvizhimost-logotip-73.jpg' %}"
+                                              style="width: 120px;"> </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Добовление и просмотр
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="sell/">Продажа</a></li>
+                        <li><a class="dropdown-item" href="book/">Покупка</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="poderka">поддержка</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
-<div class="container text-center">
-  <div class="row align-items-start">
-    <div class="col">
-          <div class="col-4" style="width: 300px; margin-left: 100px; margin-top: px" ><br>𝙂𝙤𝙡𝙙𝙚𝙣𝙎𝙩𝙧𝙚𝙚𝙩<br>Целью данного проекта является создание системы онлайн-бронирования и аренды жилых помещений или недвижимости. Система будет обеспечивать возможность пользователям поиска, просмотра, бронирования и оплаты аренды жилья через интернет.<img src="{% static '38.1.jpg' %}" style="width: 700px; margin-left: 500px; margin-bottom: 10px"><img src="{% static '41-1.jpg' %}" style="width: 700px; margin-left: 500px; margin-bottom: 10px">
+
+<div class="container-fluid mt-5"><h1 class="mb-4">Просмотр жилых помений</h1>
+    <div class="row">
+        {% for dom in doms %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                {% if dom.image %}
+                <img src="{{ dom.image.url }}" alt="{{ dom.destination.name }}" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ dom.name }}</h5>
+                    <p class="card-text">{{ dom.anons }}</p>
+                    <p class="card-text">Цена: {{ dom.price }} сом</p>
+                    <p class="card-text">{{ dom.image }}</p>
+                    <p class="card-text">{{ dom.date }}</p>
+                    {% if user.is_authenticated %}{% if is_booked %}
+                    <button class="btn btn-success" disabled>Забронировано</button>
+                    {% else %}
+                    <form method="post" action="{% url 'book_tour' %}"> {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Забронировать</button>
+                    </form>
+                    <p> {% endif %}
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary">Войти</a> <a href="{% url 'register' %}"
+                                                                                         class="btn btn-primary">Зарегистрироваться</a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    <div class="col">
-  <img src="{% static 'Minimalizm_1.jpg' %}" style="width: 700px; margin-left: 600px; margin-bottom: 100000px">
-    </div>
-  </div>
-</div>
-<div class="container text-center">
-    </div>
-  </div>
 </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </html>

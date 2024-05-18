@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import ween
+from .models import Ween
 
-admin.site.register(ween)
+admin.site.register(Ween)

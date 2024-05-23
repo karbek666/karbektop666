@@ -11,7 +11,8 @@ urlpatterns = [
     path('sell/', views.sell, name='sell'),
     path('book_tour/', views.book_tour, name='book_tour'),
     path('profile/', views.profile, name='profile'),
-    path('poderka/', views.poderka, name='poderka')
+    path('poderka/', views.poderka, name='poderka'),
+    path('logout/', views.logout_view, name='logout'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

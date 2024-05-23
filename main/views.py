@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -14,9 +14,9 @@ def index(request):
     return response
 @login_required
 def profile(request):
-    profile = Profile.objects.all()
-    response = render(request, 'profile.html', {'profiles': profile})
-    return response
+    user = request.user
+    profile = user.profile
+    return render(request, 'profile.html', {'profile': profile})
 
 def poderka(request):
     response = render(request, 'poderka.html', {'poderkas': poderka})
@@ -60,7 +60,7 @@ def sell(request):
             purchase.user = request.user
             purchase.save()
 
-            return redirect('boot')
+            return redirect('book')
     else:
         form = SampleModelForm()
     return render(request, 'sell.html', {'form': form})
@@ -76,4 +76,8 @@ def book_tour(request, pk):
                 tour.save()
             else:
                 messages.error(request, "Извините, все места уже забронированы.")
+    return redirect('/')
+
+def logout_view(request):
+    logout(request)
     return redirect('/')

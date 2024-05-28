@@ -7,7 +7,7 @@ class Ween(models.Model):
     price = models.CharField('Цена', max_length=250)
     image = models.ImageField(blank=True, upload_to='images/')
     date = models.DateTimeField('Дата публикации')
-
+    available_seats = models.IntegerField('Доступные места', default=50)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,3 +16,7 @@ class Book_list(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tour = models.ForeignKey(Ween, on_delete=models.CASCADE)
     book_data = models.DateTimeField(auto_now_add=True)
+
+class Corzina(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ween = models.ForeignKey(Ween, on_delete=models.CASCADE)

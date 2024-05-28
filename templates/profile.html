@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-green">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'book' %} "><img src="{% static '1643620409_72-papik-pro-p-nedvizhimost-logotip-73.jpg' %}" style="width: 120px;"> </a>
+    <a class="navbar-brand" href="{% url 'book' %} "><img src="{% static 'd62525482ec8969dcb407ca238ac50d9.jpg' %}" style="width: 120px;"> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,11 +26,12 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
             <li><a class="dropdown-item" href=" {% url 'book' %}">Покупка</a></li>
+            <li><a class="dropdown-item" href="{% url 'poderca' %}">Поддержка</a></li>
             <li><hr class="dropdown-divider"></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'poderka' %}">поддержка</a>
+          <a class="nav-link" href="{% url 'poderka' %}">Избраное</a>
         </li>
       </ul>
     </div>

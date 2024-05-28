@@ -9,33 +9,55 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-green">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'book' %} "><img src="{% static '1643620409_72-papik-pro-p-nedvizhimost-logotip-73.jpg' %}" style="width: 120px;"> </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Добовление и просмотр
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
-            <li><a class="dropdown-item" href=" {% url 'book' %}">Покупка</a></li>
-            <li><hr class="dropdown-divider"></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'poderka' %}">поддержка</a>
-        </li>
-      </ul>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'book' %} "><img
+                src="{% static 'd62525482ec8969dcb407ca238ac50d9.jpg' %}" style="width: 120px;"> </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Добовление и просмотр
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
+                        <li><a class="dropdown-item" href=" {% url 'book' %}">Покупка</a></li>
+                        <li><a class="dropdown-item" href="{% url 'poderca' %}">Поддержка</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'poderka' %}">Избраное</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
+<h2>Забронированные туры:</h2>
+<div class="row">
+    {% for poderkas in poderka %}
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ poderka.name }}</h5>
+                    <p class="card-text">{{ poderka.anons }}</p>
+                    <p class="card-text">Цена: {{ poderka.price }} сом</p>
+                    <p class="card-text">{{ poderka.image }}</p>
+                    <p class="card-text">{{ poderka.date }}</p>
+                </form>
+            </div>
+        </div>
+    </div>
+  {% endfor %}
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

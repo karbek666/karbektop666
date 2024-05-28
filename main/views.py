@@ -2,25 +2,31 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import LoginForm, RegisterForm, SampleModelForm
-from .models import Ween, Profile, Book_list
+from .models import Ween, Profile, Book_list, Corzina
 
 
 def index(request):
     dom = Ween.objects.all()
     response = render(request, 'books.html', {'doms': dom})
     return response
+
+
 @login_required
 def profile(request):
     user = request.user
     profile = user.profile
     return render(request, 'profile.html', {'profile': profile})
 
+
 def poderka(request):
+    poderka = Corzina.objects.filter(user=request.user)
     response = render(request, 'poderka.html', {'poderkas': poderka})
     return response
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -51,6 +57,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
 @login_required
 def sell(request):
     if request.method == 'POST':
@@ -65,9 +72,14 @@ def sell(request):
         form = SampleModelForm()
     return render(request, 'sell.html', {'form': form})
 
+
 @login_required
 def book_tour(request, pk):
-    tour = get_object_or_404(pk=pk)
+    try:
+        tour = Ween.objects.get(pk=pk)
+    except Ween.DoesNotExist:
+        return HttpResponse("Тур с таким id не найден.", status=404)
+
     if request.method == 'POST':
         if not Book_list.objects.filter(user=request.user, tour=tour).exists():
             if tour.available_seats > 0:
@@ -76,8 +88,15 @@ def book_tour(request, pk):
                 tour.save()
             else:
                 messages.error(request, "Извините, все места уже забронированы.")
-    return redirect('/')
+    return redirect('poderka')
+
 
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+def poderca(request):
+    response = render(request, 'books.html', {'podercas': poderca})
+    return response
+

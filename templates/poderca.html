@@ -25,7 +25,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Добовление и просмотр
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
@@ -43,41 +42,6 @@
         </div>
     </div>
 </nav>
-
-<div class="container-fluid mt-5"><h1 class="mb-4">Просмотр жилых помений</h1>
-    <div class="row">
-        {% for dom in doms %}
-        <div class="col-md-4 mb-4">
-            <div class="card shadow">
-                {% if dom.image %}
-                <img src="{{ dom.image.url }}" alt="{{ dom.destination.name }}" class="card-img-top">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ dom.name }}</h5>
-                    <p class="card-text">{{ dom.anons }}</p>
-                    <p class="card-text">Цена: {{ dom.price }} сом</p>
-                    <p class="card-text">{{ dom.image }}</p>
-                    <p class="card-text">{{ dom.date }}</p>
-                    {% if user.is_authenticated %}{% if is_booked %}
-                    <button class="btn btn-success" disabled>Забронировано</button>
-                    {% else %}
-                    <form action="{% url 'book_tour' pk=dom.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Забронировать тур</button>
-                    </form>
-
-
-                    <p> {% endif %}
-                        {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-primary">Войти</a> <a href="{% url 'register' %}"
-                                                                                         class="btn btn-primary">Зарегистрироваться</a>
-                        {% endif %}
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

@@ -100,3 +100,8 @@ def poderca(request):
     response = render(request, 'books.html', {'podercas': poderca})
     return response
 
+def detail(request, response_id):
+    response = get_object_or_404(Ween, pk=response_id)
+    return render(request, "detail.hml", {'response': response})
+
+

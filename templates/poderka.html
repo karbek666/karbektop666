@@ -42,22 +42,28 @@
         </div>
     </div>
 </nav>
-<h2>Забронированные туры:</h2>
-<div class="row">
-    {% for poderkas in poderka %}
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ poderka.name }}</h5>
-                    <p class="card-text">{{ poderka.anons }}</p>
-                    <p class="card-text">Цена: {{ poderka.price }} сом</p>
-                    <p class="card-text">{{ poderka.image }}</p>
-                    <p class="card-text">{{ poderka.date }}</p>
-                </form>
-            </div>
-        </div>
-    </div>
-  {% endfor %}
+h1>Забронированные туры</h1>
+<ul>
+    {% for item in poderka %}
+    <li>
+        <strong>Тур:</strong> {{ item.tour.name }}<br>
+        <strong>Описание:</strong> {{ item.tour.anons }}<br>
+        <strong>Цена:</strong> {{ item.tour.price }}<br>
+        <strong>Дата публикации:</strong> {{ item.tour.date }}<br>
+        <strong>Доступные места:</strong> {{ item.tour.available_seats }}<br>
+        <strong>Дата бронирования:</strong> {{ item.book_data }}
+        <form action="{% url 'profile'  %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Забронировать тур</button>
+        </form>
+        {% if item.tour.image %}
+        <img src="{{ item.tour.image.url }}" alt="Изображение тура">
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>Нет забронированных туров.</li>
+    {% endfor %}
+</ul>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

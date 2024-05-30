@@ -23,8 +23,8 @@ def profile(request):
 
 
 def poderka(request):
-    poderka = Corzina.objects.filter(user=request.user)
-    response = render(request, 'poderka.html', {'poderkas': poderka})
+    poderka = Book_list.objects.filter(user=request.user)
+    response = render(request, 'poderka.html', {'poderka': poderka})
     return response
 
 

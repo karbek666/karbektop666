@@ -23,8 +23,8 @@ def profile(request):
 
 
 def poderka(request):
-    poderka = Corzina.objects.filter(user=request.user)
-    response = render(request, 'poderka.html', {'poderkas': poderka})
+    poderka = Book_list.objects.filter(user=request.user)
+    response = render(request, 'poderka.html', {'poderka': poderka})
     return response
 
 
@@ -97,6 +97,9 @@ def logout_view(request):
 
 
 def poderca(request):
-    response = render(request, 'books.html', {'podercas': poderca})
+    response = render(request, 'poderca.html', {'podercas': poderca})
     return response
 
+def detail(request, response_id):
+    response = get_object_or_404(Ween, pk=response_id)
+    return render(request, "detail.hml", {'response': response})

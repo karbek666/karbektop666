@@ -44,7 +44,7 @@
   color: #000000;  text-decoration: none;
 }.container .info span .fa {
   color: #EF3B3A;}
-body {  background: #76b852; /* fallback for old browsers */
+body {  background: #76b852;
   background:
   font-family: "Roboto", sans-serif;  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;}

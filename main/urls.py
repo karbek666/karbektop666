@@ -13,7 +13,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('poderka/', views.poderka, name='poderka'),
     path('logout/', views.logout_view, name='logout'),
-    path('poderca/', views.poderca, name='poderca')
+    path('poderca/', views.poderca, name='poderca'),
+    path('detail/<int:pk>/', views.detail, name='detail'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

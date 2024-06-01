@@ -78,7 +78,7 @@ def book_tour(request, pk):
     try:
         tour = Ween.objects.get(pk=pk)
     except Ween.DoesNotExist:
-        return HttpResponse("Тур с таким id не найден.", status=404)
+        return HttpResponse("Дом с таким id не найден.", status=404)
 
     if request.method == 'POST':
         if not Book_list.objects.filter(user=request.user, tour=tour).exists():
@@ -99,4 +99,8 @@ def logout_view(request):
 def poderca(request):
     response = render(request, 'books.html', {'podercas': poderca})
     return response
+
+def detail(request, response_id):
+    response = get_object_or_404(Ween, pk=response_id)
+    return render(request, "detail.hml", {'response': response})
 

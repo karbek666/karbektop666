@@ -3,11 +3,11 @@ from django.db import models
 
 class Ween(models.Model):
     name = models.CharField('Имя', max_length=20)
-    anons = models.CharField('Добавить описание', max_length=250)
+    anons = models.TextField('Добавить описание', max_length=250)
     price = models.CharField('Цена', max_length=250)
     image = models.ImageField(blank=True, upload_to='images/')
     date = models.DateTimeField('Дата публикации')
-    available_seats = models.IntegerField('Доступные места', default=50)
+    available_seats = models.IntegerField('Количество комнат', default=10)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

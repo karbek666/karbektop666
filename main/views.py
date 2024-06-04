@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import DetailView
 
 from .forms import LoginForm, RegisterForm, SampleModelForm
 from .models import Ween, Profile, Book_list, Corzina
@@ -87,7 +88,7 @@ def book_tour(request, pk):
                 tour.available_seats -= 1
                 tour.save()
             else:
-                messages.error(request, "Извините, все места уже забронированы.")
+                messages.error(request, "Извините, все места уже куплены.")
     return redirect('poderka')
 
 
@@ -97,10 +98,11 @@ def logout_view(request):
 
 
 def poderca(request):
-    response = render(request, 'books.html', {'podercas': poderca})
+    response = render(request, 'poderca.html', {'podercas': poderca})
     return response
 
-def detail(request, response_id):
-    response = get_object_or_404(Ween, pk=response_id)
-    return render(request, "detail.hml", {'response': response})
+class MyDetailView(DetailView):
+    model = Ween
+    template_name = 'detail.html'
+    context_object_name = 'detail'
 

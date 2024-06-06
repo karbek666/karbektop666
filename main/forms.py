@@ -2,13 +2,18 @@ from django import forms
 from django.forms import ModelForm
 from django_recaptcha.fields import ReCaptchaField
 from django.contrib.auth.models import User
-from .models import Ween
+from .models import Ween, Image_ween
 
 
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image_ween
+        fields = ('img', )
 class SampleModelForm(ModelForm):
     class Meta:
         model = Ween
         fields='__all__'
+        exclude = ['images']
 
 from django.contrib.auth.forms import UserCreationForm
 

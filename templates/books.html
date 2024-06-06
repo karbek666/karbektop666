@@ -71,10 +71,9 @@
                     <form action="{% url 'book_tour' pk=dom.id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit">Добавить</button>
-                       <button type="submit"><a href="{% url 'detail' pk=dom.pk %}">подробнее</a></button>
-<!--                        <a href="{% url 'detail' pk=dom.pk %}"><button type="submit">подробнее</button></a>-->
-                    </form>
 
+                    </form>
+                        <a href="{% url 'detail' pk=dom.pk %}"><button>подробнее</button></a>
 
 
                     <p> {% endif %}

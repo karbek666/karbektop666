@@ -42,24 +42,31 @@
         </div>
     </div>
 </nav>
-<h1>Забронированные туры</h1>
-    <ul>
+<div class="container-fluid mt-5"><h1 class="mb-4">Забронированные дома</h1>
+    <div class="row">
         {% for item in poderka %}
-        <li>
-            <strong>Дом:</strong> {{ item.tour.name }}<br>
-            <strong>Описание:</strong> {{ item.tour.anons }}<br>
-            <strong>Цена:</strong> {{ item.tour.price }}<br>
-            <strong>Дата публикации:</strong> {{ item.tour.date }}<br>
-            <strong>Доступные места:</strong> {{ item.tour.available_seats }}<br>
-            <strong>Дата бронирования:</strong> {{ item.book_data }}<br>
-            {% if item.tour.image %}
-                <img src="{{ item.tour.image.url }}"  alt="Изображение тура" style="width: 500px">
-            {% endif %}
-        </li>
-        {% empty %}
-            <li>Нет забронированных туров.</li>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                {% if item.tour.image %}
+                <img src="{{ item.tour.image.url }}"  alt="Изображение " style="width: 500px">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.tour.name }}</h5>
+                    <p class="card-text">Цена: {{ item.tour.anons }} сом</p>
+                    <p class="card-text">Цена: {{ item.tour.price  }} сом</p>
+                    <p class="card-text">{{ item.tour.date  }}</p>
+                    <p class="card-text">{{ item.tour.available_seats }}</p>
+                    <p class="card-text">{{ item.book_data }}</p>
+
+
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
+</div>
+
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

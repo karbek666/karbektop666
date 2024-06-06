@@ -14,12 +14,16 @@
 
 <ul>
     <li>{{detail.name}}</li>
-    <img src="{{detail.image.url}}" style="width: 500px">
+    {% for image in image  %}
+    <img src="{{ image.image.url }}" style="width: 500px">
+    {% endfor %}
     <li>{{detail.anons}}</li>
     <li>{{detail.price}}</li>
+    <li>{{detail.number}}</li>
     <li>{{detail.date}}</li>
     <li>{{detail.available_seats}}</li>
 </ul>
+
 
 
 {% endblock %}

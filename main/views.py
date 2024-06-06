@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView
 
 from .forms import LoginForm, RegisterForm, SampleModelForm
-from .models import Ween, Profile, Book_list, Corzina
+from .models import Ween, Profile, Book_list, Corzina, Image_ween
 
 
 def index(request):
@@ -63,10 +63,15 @@ def register(request):
 def sell(request):
     if request.method == 'POST':
         form = SampleModelForm(request.POST, request.FILES)
+        images = request.FILES.getlist('images')
         if form.is_valid():
             purchase = form.save(commit=False)
             purchase.user = request.user
             purchase.save()
+            for image in images:
+                img_obj = Image_ween(img=image)
+                img_obj.save()
+                purchase.images.add(img_obj)
 
             return redirect('book')
     else:
@@ -101,8 +106,10 @@ def poderca(request):
     response = render(request, 'poderca.html', {'podercas': poderca})
     return response
 
-class MyDetailView(DetailView):
-    model = Ween
-    template_name = 'detail.html'
-    context_object_name = 'detail'
+def MyDetailView(request, pk):
+    model = get_object_or_404(Ween, pk=pk)
+    image = Image_ween.objects.filter(ween=model)
+    return render(request,"detail.html", {'model': model, 'image': image})
+
+
 

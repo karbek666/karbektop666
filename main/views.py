@@ -106,10 +106,8 @@ def poderca(request):
     response = render(request, 'poderca.html', {'podercas': poderca})
     return response
 
-def MyDetailView(request, pk):
-    model = get_object_or_404(Ween, pk=pk)
-    image = Image_ween.objects.filter(ween=model)
-    return render(request,"detail.html", {'model': model, 'image': image})
-
-
+class WeenDetailView(DetailView):
+    model = Ween
+    template_name = 'detail.html'
+    context_object_name = 'ween'
 

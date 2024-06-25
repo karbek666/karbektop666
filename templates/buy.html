@@ -1,87 +1,49 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/buy.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script rel="stylesheet" src="{% static 'js/buy.js' %}"></script>
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .inlineimage {
+            margin-bottom: 20px;
+        }
+        .images {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
- <div class="padding">
-        <div class="row">
-            <div class="container-fluid d-flex justify-content-center">
-                <div class="col-sm-8 col-md-6">
-                    <div class="card">
-                        <div class="card-header">
+<div class="container">
+    <div class="page-header text-center">
+        <h1>Детали оплаты</h1>
+        <div class="inlineimage text-center">
+            <img class="img-responsive images" src="https://klike.net/uploads/posts/2023-03/1679029757_3-15.png" style="display: block; margin: 0 auto;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <span>CREDIT/DEBIT CARD PAYMENT</span>
-
-                            </div>
-
-
-                            <div class="col-md-6 text-right" style="margin-top: -5px;">
-
-                                  <img src="https://img.icons8.com/color/36/000000/visa.png">
-                                  <img src="https://img.icons8.com/color/36/000000/mastercard.png">
-                                  <img src="https://img.icons8.com/color/36/000000/amex.png">
-
-                            </div>
-                        </div>
-
-                        </div>
-                        <div class="card-body" style="height: 350px">
-                            <div class="form-group">
-                            <label for="cc-number" class="control-label">CARD NUMBER</label>
-                            <input id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" required>
-                          </div>
-
-                          <div class="row">
-
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label for="cc-exp" class="control-label">CARD EXPIRY</label>
-                                    <input id="cc-exp" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="&bull;&bull; / &bull;&bull;" required>
-                                  </div>
-
-
-                            </div>
-
-                             <div class="col-md-6">
-                               <div class="form-group">
-                                <label for="cc-cvc" class="control-label">CARD CVC</label>
-                                <input id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="&bull;&bull;&bull;&bull;" required>
-                              </div>
-                            </div>
-
-                          </div>
-
-
-                          <div class="form-group">
-                            <label for="numeric" class="control-label">CARD HOLDER NAME</label>
-                            <input  type="text" class="input-lg form-control">
-                          </div>
-
-                           <div class="form-group">
-
-
-                              <form method="post" action="{% url 'buy_payment' pk %}">
-                    {% csrf_token %}
-                     <!-- Поля вашей формы для оплаты -->
-                    <button type="submit">Оплатить</button>
-                        </form>
-                          </div>
-                        </div>
-                    </div>
+                <div class="panel-body">
+                    <form method="post" action="{% url 'buy_payment' pk=pk %}" role="form">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <p><strong>Price:</strong> {{ tour.price }}</p>
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Оплатить</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

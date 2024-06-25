@@ -184,3 +184,5 @@ class My_purchases(DetailView):
 #         form = MessageForm()
 #
 #     return render(request, 'send_message.html', {'form': form, 'seller': seller})
+
+

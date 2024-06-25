@@ -28,9 +28,15 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class BuyForm(forms.ModelForm):
+    card_number = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Введите номер карты'}))
+    expiration_date = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Год'}))
+    cvv = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'CVC'}))
     class Meta:
         model = BuyModel
-        fields = '__all__'
+        fields = ['card_number', 'expiration_date', 'cvv']
+
 
 # forms.py
 

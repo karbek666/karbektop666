@@ -25,8 +25,13 @@ SECRET_KEY = 'django-insecure-#u#k_xj-wh3^z_oj4o56ph-(!cgzzjxawnb=txm_ks7txm2u_k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['golden-street.student-project-it-academy.tw1.ru',
-                 'www.golden-street.student-project-it-academy.tw1.ru']
+ALLOWED_HOSTS = [
+    'golden-street.student-project-it-academy.tw1.ru',
+    'www.golden-street.student-project-it-academy.tw1.ru',
+    '127.0.0.1',  # Добавьте эту строку, если проект запускается локально
+    'localhost',  # Можно также добавить localhost
+]
+
 
 CSRF_TRUSTED_ORIGINS = ['https://golden-street.student-project-it-academy.tw1.ru',
                         'https://www.golden-street.student-project-it-academy.tw1.ru']
@@ -87,6 +92,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.http import HttpResponse
 from django.views.generic import DetailView
-from .forms import LoginForm, RegisterForm, SampleModelForm, MessageForm, BuyForm
+from .forms import LoginForm, RegisterForm, SampleModelForm, MessageForm
 from .models import Ween, Profile, Book_list, Corzina, Image_ween, BuyModel
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -118,33 +118,16 @@ class Buy_views(DetailView):
 
 @login_required
 def process_payment(request, pk):
-    if request.method == 'POST':
-        form = BuyForm(request.POST)
-        if form.is_valid():
-            # Сохранение данных формы
-            buy_instance = form.save(commit=False)
-            buy_instance.user = request.user
-            buy_instance.book = get_object_or_404(Book_list, pk=pk)
-            buy_instance.save()
-
-            # Удаление из избранного (предполагая, что pk соответствует id элемента Book_list)
-            book_list_item = get_object_or_404(Book_list, pk=pk)
-            book_list_item.delete()
-
-            return redirect('my_purchases', pk=buy_instance.pk)  # Редирект на страницу моих покупок с новым ID покупки
-    else:
-        form = BuyForm()
-
-    return render(request, 'payment.html', {'form': form, 'pk': pk})
+    return render(request, 'payment.html', {'pk': pk})
 
 @login_required
 def delete_favorite(request, pk):
-    favorite_item = get_object_or_404(Book_list, pk=pk)
-
-    if favorite_item.user == request.user:
-        favorite_item.delete()
-
-    return redirect('poderka')
+    if request.method == 'POST':
+        type = request.POST.get('type')
+        if type == 'book_list':
+            favorite_item = get_object_or_404(Book_list, pk=pk)
+            favorite_item.delete()
+            return redirect('poderka')
 
 
 @login_required
@@ -184,5 +167,3 @@ class My_purchases(DetailView):
 #         form = MessageForm()
 #
 #     return render(request, 'send_message.html', {'form': form, 'seller': seller})
-
-

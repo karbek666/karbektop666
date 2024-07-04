@@ -38,8 +38,9 @@ class BuyModel(models.Model):
     book = models.OneToOneField(Book_list, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     card_number = models.CharField(max_length=16, validators=[MinLengthValidator(16)])
-    expiration_date = models.IntegerField(max_length=5,validators=[MinValueValidator(2024)])
+    expiration_date = models.IntegerField(validators=[MinValueValidator(2024)])
     cvv = models.CharField(max_length=3)
+    card_owner = models.CharField(max_length=100)
     payment_date = models.DateTimeField(auto_now_add=True)
 
 

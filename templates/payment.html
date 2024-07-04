@@ -1,16 +1,139 @@
-<!-- templates/buy_form.html -->
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Payment Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма оплаты</title>
+    <link rel="stylesheet" href="{% static 'css/buy.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .panel-heading {
+            background-color: #3F729B;
+            color: #fff;
+            border-color: #3F729B;
+        }
+
+        .panel-title {
+            font-size: 24px;
+        }
+
+        .panel-body {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group-addon {
+            background-color: #f5f5f5;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #3F729B;
+            border-color: #3F729B;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #2e5f85;
+            border-color: #2e5f85;
+        }
+
+        .fa-credit-card {
+            font-size: 24px;
+            color: #6CAEDF;
+        }
+    </style>
 </head>
 <body>
-    <h2>Pay for your Booking</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Payment</button>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">Детали оплаты</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" role="form" id="payment-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_card_number">НОМЕР КАРТЫ</label>
+                            <div class="input-group">
+                                {{ form.card_number }}
+                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_expiration_date">СРОК ГОДНОСТИ КАРТЫ (ММ/ГГ)</label>
+                            {{ form.expiration_date }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_cvv">CV CODE</label>
+                            {{ form.cvv }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_card_owner">ВЛАДЕЛЕЦ КАРТЫ</label>
+                            {{ form.card_owner }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Оплатить</button>
+                            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Маска для ввода номера карты
+    $('#id_card_number').on('input', function () {
+        var value = $(this).val().replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        var matches = value.match(/\d{4,16}/g);
+        var match = matches && matches[0] || '';
+        var parts = [];
+
+        for (i = 0, len = match.length; i < len; i += 4) {
+            parts.push(match.substring(i, i + 4));
+        }
+
+        if (parts.length) {
+            $(this).val(parts.join(' '));
+        } else {
+            $(this).val(value);
+        }
+    });
+    // Маска для ввода срока действия карты
+    $('#id_expiration_date').on('input', function () {
+        var value = $(this).val().replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        var matches = value.match(/\d{2,4}/g);
+        var match = matches && matches[0]  '';
+        var parts = [];
+
+        for (i = 0, len = match.length; i < len; i += 2) {
+            parts.push(match.substring(i, i + 2));
+        }
+
+        if (parts.length) {
+            $(this).val(parts.join(' / '));
+        } else {
+            $(this).val(value);
+        }
+    });
+</script>
+
 </body>
 </html>

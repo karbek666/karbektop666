@@ -9,12 +9,21 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/karbek.css' %}">
 <!--    <script rel="stylesheet" src="{% static 'js/sell.js' %}"></script>-->
+        <style>
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-color: #f5f5dc;
+        }
+    </style>
     <title>Title</title></head>
 <body>
 <nav class="navbar navbar-expand-lg bg-green">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'book' %} "><img
-                src="{% static 'd62525482ec8969dcb407ca238ac50d9.jpg' %}" style="width: 120px;"> </a>
+                src="{% static 'photo.png' %}" style="width: 120px;"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,7 +57,7 @@
 <div class="container text-center">
   <div class="row">
     <div class="col">
-      <img src="{% static '1669857544_41-indasil-club-p-risunok-sovremennaya-arkhitektura-karandas-42.jpg' %}" class="rounded float-start" style="width: 500px;" alt="...">
+      <img src="{% static 'tooop.png' %}" class="rounded float-start" style="width: 500px;" alt="...">
     </div>
     <div class="col">
    <form method="POST" enctype="multipart/form-data" style="width: 500px;">

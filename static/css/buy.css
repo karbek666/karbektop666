@@ -1,11 +1,1 @@
-.padding{
-
-     padding: 5rem !important;
-}
-
-
-
- .form-control:focus {
-    box-shadow: 10px 0px 0px 0px #ffffff !important;
-    border-color: #4ca746;
-}
+.inlineimage{max-width:470px;margin-right: 8px;margin-left: 10px}.images{display: inline-block;max-width: 98%;height: auto;width: 22%;margin: 1%;left:20px;text-align: center}

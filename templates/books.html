@@ -8,8 +8,11 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         a {
+            text-decoration: none;
+        }
 
-        text-decorator:none
+        body {
+            background-color: #f5f5dc;
         }
     </style>
     <title>Title</title>
@@ -18,7 +21,7 @@
 <nav class="navbar navbar-expand-lg bg-green">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'book' %} "><img
-                src="{% static 'd62525482ec8969dcb407ca238ac50d9.jpg' %}"
+                src="{% static 'photo.png' %}"
                 style="width: 120px;"> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +40,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'sell' %}">Продажа</a></li>
                         <li><a class="dropdown-item" href="{% url 'my_sell' %}">Мои продажи</a></li>
-                        <li><a class="dropdown-item" href="{% url 'my_sell' %}">Мои пoкупки</a></li>
+                        <li><a class="dropdown-item" href="{% url 'my_purchases' %}">Мои пoкупки</a></li>
                         <li><a class="dropdown-item" href="{% url 'poderca' %}">Поддержка</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -52,7 +55,7 @@
     </div>
 </nav>
 
-<div class="container-fluid mt-5"><h1 class="mb-4">Просмотр жилых помещений</h1>
+<div class="container-fluid mt-5"><h1 class="mb-4">  </h1>
     <div class="row">
         {% for dom in doms %}
         <div class="col-md-4 mb-4">

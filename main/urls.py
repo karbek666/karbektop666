@@ -20,7 +20,8 @@ urlpatterns = [
     path('delete_favorite/<int:pk>/', views.delete_favorite, name='delete_favorite'),
     path('my_sell/', views.my_sell, name='my_sell'),
     path('delete_my_sell/<int:pk>/', views.delete_my_sell, name='delete_my_sell'),
-    path('My_purchases/<int:pk>/', views.My_purchases.as_view(), name='my_purchases')
+    path('My_purchases', views.my_purchases, name='my_purchases'),
+    path('purchases_tour,/<int:pk>/', views.purchases_tour, name='purchases_tour,'),
     # path('send_message/<int:seller_id>/', views.send_message, name='send_message'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

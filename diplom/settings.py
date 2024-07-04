@@ -31,10 +31,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1',  # Добавьте эту строку, если проект запускается локально
     'localhost',  # Можно также добавить localhost
 ]
-
-
-CSRF_TRUSTED_ORIGINS = ['https://golden-street.student-project-it-academy.tw1.ru',
-                        'https://www.golden-street.student-project-it-academy.tw1.ru']
+#
+#
+# CSRF_TRUSTED_ORIGINS = ['https://golden-street.student-project-it-academy.tw1.ru',
+#                         'https://www.golden-street.student-project-it-academy.tw1.ru']
 
 
 CSRF_COOKIE_SECURE = True
@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -136,14 +135,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-RECAPTCHA_PUBLIC_KEY = '6LcM17gpAAAAAELgd9qkvOP9khOXiNaq7F5HvpgG'
-RECAPTCHA_PRIVATE_KEY = '6LcM17gpAAAAAIPEKUWGX1CtITQPsanIV4VhBsek'
+# RECAPTCHA_PUBLIC_KEY = '6LcM17gpAAAAAELgd9qkvOP9khOXiNaq7F5HvpgG'
+# RECAPTCHA_PRIVATE_KEY = '6LcM17gpAAAAAIPEKUWGX1CtITQPsanIV4VhBsek'
 
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = 'boot'
+LOGIN_REDIRECT_URL = 'book'
 LOGOUT_REDIRECT_URL = 'login'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

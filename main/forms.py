@@ -13,7 +13,7 @@ class SampleModelForm(ModelForm):
     class Meta:
         model = Ween
         fields='__all__'
-        exclude = ['author', 'images']
+        exclude = ['user', 'images']
 
 from django.contrib.auth.forms import UserCreationForm
 

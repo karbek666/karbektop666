@@ -38,7 +38,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                return redirect('book/')
+                return redirect('book')
             else:
                 messages.error(request, 'Неверное имя пользователя или пароль. Пожалуйста, попробуйте снова.')
     else:
@@ -118,7 +118,7 @@ class Buy_views(DetailView):
 from .forms import BuyForm
 @login_required
 def process_payment(request, book_id):
-    book = get_object_or_404(Book_list, id=book_id)
+    book = get_object_or_404(Ween, id=book_id)
     if request.method == 'POST':
         form = BuyForm(request.POST)
         if form.is_valid():
@@ -126,17 +126,12 @@ def process_payment(request, book_id):
             buy.user = request.user
             buy.book = book
 
-            # Расчет суммы на основе цены дома
-            buy.amount = book.tour.price
+            # Расчет суммы на основе цены книги
+            buy.amount = book.price
             buy.save()
 
-            # Обновление статуса is_purchased у соответствующего тура
-            tour = book.tour
-            tour.is_purchased = True
-            tour.save()
-
-            # Перенаправление на страницу с информацией о бронировании
-            return redirect('book')
+            # Перенаправление на страницу с покупками
+            return redirect('my_purchases')  # Замените 'my_purchases' на имя вашего URL для страницы покупок
     else:
         form = BuyForm()
     return render(request, 'payment.html', {'form': form, 'book': book})
@@ -164,11 +159,27 @@ def delete_my_sell(request, pk):
             favorite_item.delete()
             return redirect('my_sell')
 
-class My_purchases(DetailView):
-    model = Ween
-    template_name = 'my_purchases.html'
-    context_object_name = 'pk'
+@login_required
+def my_purchases(request):
+    my_purchases = Book_list.objects.filter(user=request.user)
+    response = render(request, 'my_purchases.html', {'my_purchases': my_purchases})
+    return response
 
+def purchases_tour(request, pk):
+    try:
+        tour = Ween.objects.get(pk=pk)
+    except Ween.DoesNotExist:
+        return HttpResponse("Дом с таким id не найден.", status=404)
+
+    if request.method == 'POST':
+        if not Book_list.objects.filter(user=request.user, tour=tour).exists():
+            if tour.available_seats > 0:
+                Book_list.objects.create(user=request.user, tour=tour)
+                tour.available_seats -= 1
+                tour.save()
+            else:
+                messages.error(request, "Извините, все места уже куплены.")
+    return redirect('my_purchases')
 
 
 # @login_required

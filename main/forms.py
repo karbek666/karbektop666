@@ -27,15 +27,19 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
+from django import forms
+from .models import BuyModel
+
 class BuyForm(forms.ModelForm):
-    card_number = forms.IntegerField(
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Введите номер карты'}))
-    expiration_date = forms.IntegerField(
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Год'}))
-    cvv = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'CVC'}))
     class Meta:
         model = BuyModel
         fields = ['card_number', 'expiration_date', 'cvv']
+        widgets = {
+            'card_number': forms.TextInput(attrs={'placeholder': '0000 0000 0000 0000'}),
+            'expiration_date': forms.TextInput(attrs={'placeholder': 'MMYY'}),
+            'cvv': forms.TextInput(attrs={'placeholder': 'CVV'}),
+        }
+
 
 
 # forms.py

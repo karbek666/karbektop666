@@ -18,6 +18,7 @@ class Ween(models.Model):
     date = models.DateTimeField('Дата публикации', auto_now_add=True)
     available_seats = models.IntegerField('Количество комнат', default=10)
     image = models.ImageField('Лицевое фото')
+    is_purchased = models.BooleanField(default=False)  # Новое поле
     def __str__(self):
         return self.name
 
@@ -26,6 +27,7 @@ class Book_list(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tour = models.ForeignKey(Ween, on_delete=models.CASCADE)
     book_data = models.DateTimeField(auto_now_add=True)
+    is_purchased = models.BooleanField(default=False)  # Новое поле
 
 class Corzina(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

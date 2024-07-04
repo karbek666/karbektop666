@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 @login_required
 def index(request):
-    dom = Ween.objects.all()
+    dom = Ween.objects.filter(is_purchased=False)
     response = render(request, 'books.html', {'doms': dom})
     return response
 
@@ -115,11 +115,31 @@ class Buy_views(DetailView):
     model = BuyModel
     template_name = 'buy.html'
     context_object_name = 'buy'
-
+from .forms import BuyForm
 @login_required
-def process_payment(request, pk):
-    return render(request, 'payment.html', {'pk': pk})
+def process_payment(request, book_id):
+    book = get_object_or_404(Book_list, id=book_id)
+    if request.method == 'POST':
+        form = BuyForm(request.POST)
+        if form.is_valid():
+            buy = form.save(commit=False)
+            buy.user = request.user
+            buy.book = book
 
+            # Расчет суммы на основе цены дома
+            buy.amount = book.tour.price
+            buy.save()
+
+            # Обновление статуса is_purchased у соответствующего тура
+            tour = book.tour
+            tour.is_purchased = True
+            tour.save()
+
+            # Перенаправление на страницу с информацией о бронировании
+            return redirect('book')
+    else:
+        form = BuyForm()
+    return render(request, 'payment.html', {'form': form, 'book': book})
 @login_required
 def delete_favorite(request, pk):
     if request.method == 'POST':

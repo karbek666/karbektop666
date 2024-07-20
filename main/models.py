@@ -1,11 +1,15 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
-
+def validate_image_size(value):
+    limit_mb = 5  # Limit the file size to 5 MB
+    if value.size > limit_mb * 1024 * 1024:
+        raise ValidationError(f"Max size of file is {limit_mb} MB")
 class Image_ween(models.Model):
-    img = models.ImageField(',', upload_to='myimge/')
+    img = models.ImageField(upload_to='myimage/', validators=[validate_image_size])
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 class Ween(models.Model):

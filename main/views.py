@@ -38,7 +38,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                return redirect('book')
+                return redirect('book/')
             else:
                 messages.error(request, 'Неверное имя пользователя или пароль. Пожалуйста, попробуйте снова.')
     else:
@@ -71,10 +71,11 @@ def sell(request):
             for image in request.FILES.getlist('images'):
                 img_obj = Image_ween.objects.create(img=image)
                 purchase.images.add(img_obj)
-            return redirect('my_sell')
+            return redirect('my_sell')  # После добавления в продажу перенаправляем на страницу "Мои продажи"
     else:
         form = SampleModelForm()
     return render(request, 'sell.html', {'form': form})
+
 
 
 
@@ -87,13 +88,11 @@ def book_tour(request, pk):
         return HttpResponse("Дом с таким id не найден.", status=404)
 
     if request.method == 'POST':
-        if not Book_list.objects.filter(user=request.user, tour=tour).exists():
-            if tour.available_seats > 0:
-                Book_list.objects.create(user=request.user, tour=tour)
-                tour.available_seats -= 1
-                tour.save()
-            else:
-                messages.error(request, "Извините, все места уже куплены.")
+        if not Book_list.objects.filter(user=request.user, tour=tour, is_purchased=False).exists():
+            # Создание объекта в избранном, но не в покупках
+            Book_list.objects.create(user=request.user, tour=tour)
+        else:
+            messages.info(request, "Дом уже добавлен в избранное.")
     return redirect('poderka')
 
 @login_required
@@ -118,7 +117,7 @@ class Buy_views(DetailView):
 from .forms import BuyForm
 @login_required
 def process_payment(request, book_id):
-    book = get_object_or_404(Ween, id=book_id)
+    book = get_object_or_404(Book_list, id=book_id)
     if request.method == 'POST':
         form = BuyForm(request.POST)
         if form.is_valid():
@@ -126,15 +125,24 @@ def process_payment(request, book_id):
             buy.user = request.user
             buy.book = book
 
-            # Расчет суммы на основе цены книги
-            buy.amount = book.price
+            # Расчет суммы на основе цены дома
+            buy.amount = book.tour.price
             buy.save()
 
-            # Перенаправление на страницу с покупками
-            return redirect('my_purchases')  # Замените 'my_purchases' на имя вашего URL для страницы покупок
+            # Обновление статуса is_purchased у соответствующего тура
+            tour = book.tour
+            tour.is_purchased = True
+            tour.save()
+
+            # Добавление в список "Мои покупки"
+            Book_list.objects.create(user=request.user, tour=tour)
+
+            # Перенаправление на страницу с информацией о покупке
+            return redirect('my_purchases')
     else:
         form = BuyForm()
     return render(request, 'payment.html', {'form': form, 'book': book})
+
 @login_required
 def delete_favorite(request, pk):
     if request.method == 'POST':
@@ -159,6 +167,31 @@ def delete_my_sell(request, pk):
             favorite_item.delete()
             return redirect('my_sell')
 
+class My_purchases(DetailView):
+    model = Ween
+    template_name = 'my_purchases.html'
+    context_object_name = 'pk'
+
+
+
+# @login_required
+# def send_message(request, seller_id):
+#     seller = get_object_or_404(User, id=seller_id)
+#
+#     if request.method == 'POST':
+#         form = MessageForm(request.POST)
+#         if form.is_valid():
+#             message = form.save(commit=False)
+#             message.sender = request.user
+#             message.recipient = seller
+#             message.save()
+#
+#     else:
+#         form = MessageForm()
+#
+#     return render(request, 'send_message.html', {'form': form, 'seller': seller})
+
+
 @login_required
 def my_purchases(request):
     my_purchases = Book_list.objects.filter(user=request.user)
@@ -181,6 +214,39 @@ def purchases_tour(request, pk):
                 messages.error(request, "Извините, все места уже куплены.")
     return redirect('my_purchases')
 
+@login_required
+def make_payment(request, pk):
+    tour = get_object_or_404(Ween, pk=pk)
+    is_paid = False
+    book = Book_list.objects.filter(user=request.user, tour=tour).first()
+    if book and book.is_paid:
+        is_paid = True
+
+    if request.method == 'POST':
+        form = BuyForm(request.POST)
+        if form.is_valid():
+            # payment, created = Payment.objects.get_or_create(book=book, defaults={'user': request.user,
+            #                                                                       'amount': form.cleaned_data[
+            #                                                                           'amount']})
+            # if not created:
+            #     payment.amount = form.cleaned_data['amount']
+            #     payment.save()
+
+            if not book:
+                messages.error(request, "Для этого тура и пользователя бронирование не найдено.")
+                return render(request, 'buy.html', {'form': form, 'tour': tour, 'is_paid': is_paid})
+
+            if book.is_paid:
+                messages.error(request, "Вы уже оплатили этот дом.")
+                return redirect('profile')
+
+            book.is_paid = True
+            book.save()
+            return redirect('payment_success')
+    else:
+        form = BuyForm()
+
+    return render(request, 'buy.html', {'tour': tour, 'form': form, 'is_paid': is_paid})
 
 # @login_required
 # def send_message(request, seller_id):
@@ -198,3 +264,7 @@ def purchases_tour(request, pk):
 #         form = MessageForm()
 #
 #     return render(request, 'send_message.html', {'form': form, 'seller': seller})
+
+def kaif(request):
+    response = render(request, 'KAIF.html', {'kaif': kaif})
+    return response

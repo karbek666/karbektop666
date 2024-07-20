@@ -22,6 +22,8 @@ urlpatterns = [
     path('delete_my_sell/<int:pk>/', views.delete_my_sell, name='delete_my_sell'),
     path('My_purchases', views.my_purchases, name='my_purchases'),
     path('purchases_tour,/<int:pk>/', views.purchases_tour, name='purchases_tour,'),
+    path('make_payment/<int:pk>/', views.make_payment, name='make_payment'),
     # path('send_message/<int:seller_id>/', views.send_message, name='send_message'),
+    path('kaif', views.kaif, name='kaif'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

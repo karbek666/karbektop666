@@ -31,10 +31,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1',  # Добавьте эту строку, если проект запускается локально
     'localhost',  # Можно также добавить localhost
 ]
-#
-#
-# CSRF_TRUSTED_ORIGINS = ['https://golden-street.student-project-it-academy.tw1.ru',
-#                         'https://www.golden-street.student-project-it-academy.tw1.ru']
+
+
+CSRF_TRUSTED_ORIGINS = ['https://golden-street.student-project-it-academy.tw1.ru',
+                        'https://www.golden-street.student-project-it-academy.tw1.ru']
 
 
 CSRF_COOKIE_SECURE = True

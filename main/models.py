@@ -29,6 +29,9 @@ class Book_list(models.Model):
     book_data = models.DateTimeField(auto_now_add=True)
     is_purchased = models.BooleanField(default=False)  # Новое поле
 
+    def __str__(self):
+        return self.user
+
 class Corzina(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ween = models.ForeignKey(Ween, on_delete=models.CASCADE)

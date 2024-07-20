@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django_recaptcha.fields import ReCaptchaField
 from django.contrib.auth.models import User
@@ -14,6 +15,11 @@ class SampleModelForm(ModelForm):
         model = Ween
         fields='__all__'
         exclude = ['user', 'images','is_purchased']
+
+        def validate_image_size(image):
+            max_size = 5 * 1024 * 1024  # 5MB
+            if image.size > max_size:
+                raise ValidationError(f'Размер файла не должен превышать {max_size // (1024 * 1024)}MB.')
 
 from django.contrib.auth.forms import UserCreationForm
 
